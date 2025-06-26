@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let articulos = parseInt(prompt("¿cuantos articulos vas a comprar?"))
+        let precio = parseFloat(prompt("Cuales son los precios de los articulos"))
+
+     if(articulos >= 10 && precio > 40)       {
+        let descuento = articulos * precio * 0.15;
+     let resultado_descuento = (articulos * precio) - descuento 
+     alert("Es resultado es: " + resultado_descuento);
+     }
+     if(articulos <=10)
+     {
+        let preciobase = articulos * precio;
+        alert("Precio base es: " + preciobase)
+     }
+     
+
+       //let numeros = (1 < 0) ? true : false;//
+    </script>
+</body>
+</html>

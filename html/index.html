@@ -1,0 +1,242 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Muestra 1 para ejarcicios dhtml</title>
+    <style>
+      .boton {
+        border: 1px solid black;
+        padding: 2px 10px;
+        background: rgba(27, 109, 236, 0.61);
+        color: white;
+        font-family: Arial, sans-seriff;
+        width: fit-content;
+        display: inline-block;
+        cursor: pointer;
+      }
+      .paneles {
+        display: flex;
+        justify-content: center;
+        margin-top: 32px;
+      }
+      .paneles figure {
+        width: 75px;
+      }
+      .activo {
+        color: blue;
+        font-family: Arial, "sans-serif";
+      }
+      .destacar {
+        font-size: 18px;
+        color: red;
+      }
+      .carrusel {
+        text-align: center;
+        background: #727c331a;
+        border: 1px solid black;
+        width: fit-content;
+        margin: 24px auto;
+        width: 100px;
+        padding: 24px;
+      }
+    </style>
+    <style type="text/css">
+      @font-face {
+        font-family: "moolah-font";
+        font-style: normal;
+        font-weight: 400;
+        src: url("chrome-extension://gdnhngmilhhebigaokmniikdlcjbcbhg/assets/fonts/Circular/moolah-iconfont-Regular.woff2")
+            format("woff2"),
+          url("chrome-extension://gdnhngmilhhebigaokmniikdlcjbcbhg/assets/fonts/Circular/moolah-iconfont-Regular.woff")
+            format("woff");
+        font-display: swap;
+      }
+      @font-face {
+        font-family: moolah-font-bold;
+        font-style: normal;
+        font-weight: 700;
+        src: url("chrome-extension://gdnhngmilhhebigaokmniikdlcjbcbhg/assets/fonts/Circular/moolah-iconfont-Bold.woff2")
+            format("woff2"),
+          url("chrome-extension://gdnhngmilhhebigaokmniikdlcjbcbhg/assets/fonts/Circular/moolah-iconfont-Bold.woff")
+            format("woff");
+        font-display: swap;
+      }
+    </style>
+    <style id="_goober">
+      @keyframes go2264125279 {
+        from {
+          transform: scale(0) rotate(45deg);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) rotate(45deg);
+          opacity: 1;
+        }
+      }
+      @keyframes go3020080000 {
+        from {
+          transform: scale(0);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      @keyframes go463499852 {
+        from {
+          transform: scale(0) rotate(90deg);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) rotate(90deg);
+          opacity: 1;
+        }
+      }
+      @keyframes go1268368563 {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes go1310225428 {
+        from {
+          transform: scale(0) rotate(45deg);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) rotate(45deg);
+          opacity: 1;
+        }
+      }
+      @keyframes go651618207 {
+        0% {
+          height: 0;
+          width: 0;
+          opacity: 0;
+        }
+        40% {
+          height: 0;
+          width: 6px;
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+          height: 10px;
+        }
+      }
+      @keyframes go901347462 {
+        from {
+          transform: scale(0.6);
+          opacity: 0.4;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .go4109123758 {
+        z-index: 9999;
+      }
+      .go4109123758 > * {
+        pointer-events: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="botones">
+      <div onclick="toggle()" class="boton">Abrir - cerrar</div>
+      <div onclick="cambiar()" class="boton">Cambiar título</div>
+      <div onclick="crearDiv()" class="boton">Crear bloque</div>
+      <div onclick="borrarDiv()" class="boton">Borrar bloque</div>
+      <div onclick="fuentesImg()" class="boton">Fuentes</div>
+      <div onclick="intercalar()" class="boton">Subtitulo</div>
+    </section>
+    <header><h1 id="titular" onclick="togleClase()">Hola Mundo</h1></header>
+    <div id="subtitulo" style="text-align: center">
+      Página de muestra de javascript dhtml
+    </div>
+    <div class="paneles">
+      <figure onclick="ponerPie(this)">
+        <img src="./1.png" width="33" height="75" alt="Número 1" />
+        <figcaption></figcaption>
+      </figure>
+      <figure onclick="ponerPie(this)">
+        <img src="./2.png" width="50" height="75" alt="Número 2" />
+        <figcaption></figcaption>
+      </figure>
+      <figure onclick="ponerPie(this)">
+        <img src="./3.png" width="49" height="75" alt="Número 3" />
+        <figcaption></figcaption>
+      </figure>
+    </div>
+    <div id="fuentes"></div>
+    <div class="carrusel" data-img="0" onclick="cambiaImg()">
+      <img src="./1.png" alt="Diapositivas" id="diapo" />
+    </div>
+    <!-- inicio de las funciones javascript pedidas en los ejercicios -->
+    <script>
+      function cambiar() {const titulo = document.getElementById('titular');
+        titulo.innerHTML="Hola Mundo javascript"//Cambia el texto 
+        
+        titulo.style.color= "red";
+        titulo.style.textAlign= "center";
+       
+      }
+      function crearDiv() {
+          const div = document.createElement('div');
+          div.innerHTML= "Hola Mundo"
+          div.style.backgroundColor = "red";
+          div.style.color = "white";
+          document.body.appendChild(div)
+      
+
+      }
+      function borrarDiv() {
+      const borrar = document.getElementById('jam-iframe');
+      borrar.remove()
+
+      }
+     
+function ponerPie(fig) {
+   const img = fig.getElementsByTagName("img")[0];
+  const figcaption = fig.getElementsByTagName("figcaption")[0];
+  const altText = img.getAttribute("alt");
+
+   if (figcaption.innerText === altText) {
+    figcaption.innerText = "";
+    } else {
+     figcaption.innerText = altText;
+    }
+
+       console.log(img)
+        
+      }
+      function fuentesImg() {
+        let imagenes = document.querySelectorAll("img")
+        let bloque = document.createElement("p")
+        let cuadro = document.getElementById("Fuentes").appendChild(bloque)
+
+        for(img of imagenes) {
+          cuadro.innerHTML += img.src;
+        }
+      }
+      function togleClase() {
+
+        const hola = document.getElementById("titular")
+        hola.innerText = "Se fue el anterior"
+      }
+      function intercalar() {}
+
+      function cambiaImg() {}
+      function toggle() {}
+    </script>
+
+    <iframe
+      id="jam-iframe"
+      src="chrome-extension://iohjgamcilhbgmhbnllfolmkmmekfmci/iframe.html?tabId=1505451017"
+    ></iframe>
+  </body>
+  <div id="vue-moolah-tip-shadow-root"></div>
+</html>

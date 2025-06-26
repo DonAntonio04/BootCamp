@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1e1e2f, #3a3a5a);
+  font-family: Arial, sans-serif;
+}
+
+.tarjeta {
+  background: linear-gradient(135deg, #1e1e2f, #3a3a5a);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  width: 400px;
+  height: 500px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.tarjeta img {
+  width: 100%;
+  display: block;
+}
+
+.contenido {
+  padding: 20px;
+}
+
+.contenido h2 {
+  margin: 10 0 0px;
+  text-align: left;
+  color: aliceblue;
+}
+
+
+.contenido h3 {
+    color:#1E90FF;
+    text-align: left;
+}
+
+
+.parrafos {
+display: flex;
+justify-content: space-between;
+ align-items: center;
+ width: 100%;
+padding: 0 5px;
+color: #1E90FF;
+}
+
+.a {
+    text-align: left;
+    color: white;
+}
