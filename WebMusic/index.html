@@ -15,7 +15,6 @@
           <li>🏠 Home</li>
           <li>🎧 Playlist</li>
           <li>🎤 Artist</li>
-          <li>💎 Premium</li>
           <li>❤️ Liked</li>
           <li>👤 My Account</li>
         </ul>
@@ -28,71 +27,18 @@
 
     <main class="main-content">
       <header class="artist-header">
-        <img src="six_2.jpg" alt="6ix9ine" class="profile-pic" />
         <div class="artist-info">
-          <h1 class="title-container">
-            6ix9ine <span class="verified"></span>
-            <img src="facebook-verificado.png" class="title-image">
-          </h1>
-          <p>🎶 1,985,255 Monthly Listener - 👥 15,800,000 Follower</p>
         </div>
-        <button class="subscribe-btn">🔴 Subscribed</button>
       </header>
+         <section class="search-section">
 
-      <section class="most-popular">
-        <h2>Most Popular</h2>
-        <ol>
-          <li class="song-item" data-title="FEFE" data-img="six_5.jpg">
-            <span class="position">1 -</span>
-            <img src="six_5.jpg" alt="FEFE" class="song-thumb" />
-            <span class="song-title">FEFE</span>
-            <span class="plays">681,049,060</span>
-            <span class="icons">
-              <img src="boton-de-play.png" alt="Play" />
-              <img src="me-gusta.png" alt="Like" />
-              <img src="agregar-cancion.png" alt="Add" />
-              <img src="mas.png" alt="More" />
-            </span>
-          </li>
-          <li class="song-item" data-title="GOOBA" data-img="six7.jpg">
-            <span class="position">2 -</span>
-            <img src="six7.jpg" alt="GOOBA" class="song-thumb" />
-            <span class="song-title">GOOBA</span>
-            <span class="plays">377,848,470</span>
-            <span class="icons">
-              <img src="boton-de-play.png" alt="Play" />
-              <img src="me-gusta.png" alt="Like" />
-              <img src="agregar-cancion.png" alt="Add" />
-              <img src="mas.png" alt="More" />
-            </span>
-          </li>
-           <li class="song-item" data-title="TROLLZ" data-img="six8.jpg">
-            <span class="position">3 -</span>
-            <img src="six8.jpg" alt="GOOBA" class="song-thumb" />
-            <span class="song-title">TROLLZ</span>
-            <span class="plays">182,261,314</span>
-            <span class="icons">
-              <img src="boton-de-play.png" alt="Play" />
-              <img src="me-gusta.png" alt="Like" />
-              <img src="agregar-cancion.png" alt="Add" />
-              <img src="mas.png" alt="More" />
-            </span>
-          </li>
-        </ol>
-      </section>
 
-      <section class="publications">
-        <h2>Publications</h2>
-        <div class="album-grid">
-          <img src="six_4.jpg" alt="Album 1" class="album-img" />
-          <img src="six_5.jpg" alt="Album 2" class="album-img" />
-          <img src="six_6.jpg" alt="Album 3" class="album-img" />
-          <img src="six7.jpg" alt="Album 4" class="album-img" />
-          <img src="six8.jpg" alt="Album 5" class="album-img" />
-        </div>
-      </section>
-    </main>
-  </div>
+  <h2>Buscar Canciones o Artistas</h2>
+  <input type="text" id="searchInput" placeholder="Buscar por canción o artista..." style="width: 100%; padding: 10px; font-size: 16px; margin: 10px 0; border-radius: 5px; border: none;">
+  <div id="searchResults"></div>
+</section>
+
+ 
 
 <!--Controles -->
 <!-- ✅ Reproductor con controles funcionales -->
