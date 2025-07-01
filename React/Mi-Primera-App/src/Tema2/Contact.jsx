@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 const Contact = () => {
   const contacto = "Mi número es: 6461943198 "
   return(

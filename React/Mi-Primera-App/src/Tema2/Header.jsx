@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 const Header = () => {
   const nombre = "Jose Antonio Mendivil Berrelleza y TSU"
   return(

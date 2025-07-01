@@ -1,162 +1,164 @@
-import Header from "./header"
-import Contact from "./contact"
-import About from "./about"
-import Footer from "./footer"
+import Header from "./Tema2/Header"
+import Contact from "./Tema2/Contact"
+import About from "./Tema2/About"
+import Footer from "./Tema2/Footer"
+import MiPrimeraApp from "./Tema1/MiPrimeraAppReact"
+import CalculadoraPeronal from "./Tema1/CalculadoraPersonal "
+import ListaPeliculas from "./Tema3/ListaPeliculas"
+import ProcesadorLibros from "./Tema3/ProcesadorDeLibros"
+import Gallery from "./Tema4/Galeria"
+import RestaurantMenu from "./Tema4/Menu"
+import EmpleosList from "./Tema5/Empleos"
+import ProductosTienda from "./Tema5/TiendaProductos"
 
-/*function App() {
-  const name = "Jose Antonio";
-  const age = 20;
-  const city = "Ciudad Obregón";
-  const message = `¡Hola, ${name}! Bienvenido a mi primera aplicación React.`;
-  const now = new Date();
-  const date = now.toLocaleDateString();
-  const time = now.toLocaleTimeString();
-
+//TEMA 1:
+/*
+const App = () =>{
   return (
-    <div className="app">
-      <h1>{message}</h1>
-      <p>Nombre: {name}</p>
-      <p>Edad: {age}</p>
-      <p>Ciudad: {city}</p>
-      <p>Fecha: {date}</p>
-      <p>Hora: {time}</p>
-    </div>
-  );
-}*/
-
-//https://dulcet-gumdrop-11ba3d.netlify.app/
-
-/*function App() {
-  const fechaNacimiento = new Date(2004,11,4);
-  const ageexperiencie = 1;
-  const cafesPordia = 0;
-  const horas = 7;
-  const librosLeidos = 3;
-  return (
-    <div className="app">
-      <p>Fecha de nacimiento: {fechaNacimiento.toLocaleString()}</p>
-      <p>Años de experiencia: {ageexperiencie}</p>
-      <p>Cafes por día: {cafesPordia}</p>
-      <p>Horas de Sueño por día: {horas}</p>
-      <p>Libros Leídos: {librosLeidos}</p>
+    <div>
+      <MiPrimeraApp />
+      <CalculadoraPeronal/>
     </div>
   );
 }
-
-
-
-
-//export default App;
-
-
 */
 
-/*
 
-const NavBar = () => {
+//Tema 2:
+/*const App = () => {
   return (
-    <nav>
+    <div>
+      <About/>
+      <Contact/>
+      <Footer/>
+      <Header/>
+    </div>
+  )
+}*/
+
+//TEMA 2:
+
+/*
+const proyectos = [
+  { nombre: "E-commerce App", tecnologia: "React + Node.js", descripcion: "Tienda online completa" },
+  { nombre: "Dashboard Analytics", tecnologia: "React + D3.js", descripcion: "Panel de métricas" },
+  { nombre: "Chat en Tiempo Real", tecnologia: "React + Socket.io", descripcion: "Aplicación de chat" }
+];
+
+const habilidades = ["JavaScript", "React", "Node.js", "CSS", "Git", "MongoDB", "Express"];
+
+const redesSociales = [
+  { nombre: "GitHub", url: "https://github.com/usuario" },
+  { nombre: "LinkedIn", url: "https://linkedin.com/in/usuario" },
+  { nombre: "Twitter", url: "https://twitter.com/usuario" }
+];
+
+
+
+const NavBar =() => {
+  return (
+    <nav className="navbar">
+      <h1>Mi Portafolio</h1>
       <ul>
-        <li><a href="#projects">Proyectos</a></li>
-        <li><a href="#skills">Habilidades</a></li>
-        <li><a href="#contact">Contacto</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
-  )
+  );
 }
 
-const ProjectCard = ({ title, description, link }) => {
+const ProjectCard =({ nombre, tecnologia, descripcion }) => {
   return (
-    <div style={{ border: "1px solid #ccc", padding: "1rem", margin: "1rem 0" }}>
-      <h3>{title}</h3>
-      <p>{description}</p>
-      <a href={link} target="_blank" rel="noopener noreferrer">Ver proyecto</a>
+    <div className="project-card">
+      <h3>{nombre}</h3>
+      <p><strong>Tecnologías:</strong> {tecnologia}</p>
+      <p>{descripcion}</p>
     </div>
-  )
+  );
 }
 
-const SkillBadge = ({ skill }) => {
-  return (
-    <span style={{
-      display: 'inline-block',
-      padding: '0.5rem 1rem',
-      margin: '0.3rem',
-      backgroundColor: '#f0f0f0',
-      borderRadius: '20px'
-    }}>
-      {skill}
-    </span>
-  )
+const SkillBadge =({ habilidad }) =>{
+  return <span className="skill-badge">{habilidad}</span>;
 }
 
-const SocialLinks = () => {
+function SocialLinks({ redes }) {
   return (
-    <div id="contact">
-      <h3>Redes Sociales</h3>
-      <ul>
-        <li><a href="https://github.com/carlosmendoza" target="_blank">GitHub</a></li>
-        <li><a href="https://linkedin.com/in/carlosmendoza" target="_blank">LinkedIn</a></li>
-        <li><a href="https://twitter.com/carlosdev" target="_blank">Twitter</a></li>
-      </ul>
+    <div className="social-links">
+      {redes.map((red, index) => (
+        <a key={index} href={red.url} target="_blank" rel="noreferrer">{red.nombre}</a>
+      ))}
     </div>
-  )
+  );
 }
 
-const App = () => {
+
+
+const App =() => {
   return (
     <div>
       <NavBar />
 
-      <section id="projects">
+      <section id="proyectos">
         <h2>Proyectos</h2>
-        <ProjectCard 
-          title="Sitio Web Personal" 
-          description="Un sitio hecho con React y Vite para mostrar mi portafolio." 
-          link="https://miportafolio.com" 
-        />
-        <ProjectCard 
-          title="Gestor de Tareas" 
-          description="App fullstack con Node.js y MongoDB para gestión de tareas." 
-          link="https://tareasapp.com" 
-        />
-        <ProjectCard 
-          title="Clon de Twitter" 
-          description="Aplicación social básica hecha con Firebase y React." 
-          link="https://clontwitter.com" 
-        />
+        {proyectos.map((proyecto, index) => (
+          <ProjectCard
+            key={index}
+            nombre={proyecto.nombre}
+            tecnologia={proyecto.tecnologia}
+            descripcion={proyecto.descripcion}
+          />
+        ))}
       </section>
 
-      <section id="skills">
+      <section id="habilidades">
         <h2>Habilidades</h2>
-        <SkillBadge skill="React" />
-        <SkillBadge skill="Node.js" />
-        <SkillBadge skill="JavaScript" />
-        <SkillBadge skill="MongoDB" />
-        <SkillBadge skill="CSS" />
-        <SkillBadge skill="Git" />
+        {habilidades.map((habilidad, index) => (
+          <SkillBadge key={index} habilidad={habilidad} />
+        ))}
       </section>
 
-      <SocialLinks />
+      <section id="contacto">
+        <h2>Contacto</h2>
+        <SocialLinks redes={redesSociales} />
+      </section>
     </div>
-  )
+  );
 }*/
 
+//TEMA 3:
 
-/*const App = () => {
-   const peliculas = [
-    {titulo: "El Padrino", year: 1972},
-    {titulo: "Pulp Fiction", year: 1994},
-    {titulo: "El Señor de los anillos", year: 2001},
-    {titulo: "Matrix", year: 1999},
-    {titulo: "Inception", year: 2010}
-   ]
-
-
+/*
+const App = ()=> {
   return (
-    
+    <div>
+      <ListaPeliculas />
+      <ProcesadorLibros />
+    </div>
+  );
+}
+*/
+
+// TEMA 4:
+/*
+const App =() => {
+  return (
+    <div>
+      <Gallery />
+      <RestaurantMenu/>
+    </div>
+  );
+}
+*/
+
+const App = () => {
+  return (
+    <div>
+      <EmpleosList/>
+      <ProductosTienda/>
+    </div>
   )
 }
 
+export default App;
 
-
-export default App*/
