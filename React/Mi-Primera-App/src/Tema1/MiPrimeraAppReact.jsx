@@ -2,12 +2,12 @@
 import { useState, useEffect } from "react";
 
 function Perfil() {
-  const nombre = "Ana García";
-  const edad = 25;
-  const ciudad = "Madrid";
-  const profesion = "Desarrolladora Frontend";
+  const nombre = "Jose Antonio";
+  const edad = 20;
+  const ciudad = "Fundición";
+  const profesion = "Desarrollador";
   const pasatiempos = ["leer", "programar", "viajar"];
-  const colorFavorito = "azul";
+  const colorFavorito = "rojo";
 
   const [fecha, setFecha] = useState(new Date());
 
