@@ -13,6 +13,8 @@ import Gallery from "./Tema4/Galeria";
 import RestaurantMenu from "./Tema4/Menu";
 import EmpleosList from "./Tema5/Empleos";
 import ProductosTienda from "./Tema5/TiendaProductos";
+import DashBoard from "./Tema1/Dashboard";
+
 
 const App = () => {
   const [ejercicio, setEjercicio] = useState(null);
@@ -43,6 +45,8 @@ const App = () => {
       return <Contact />;
     case "ej12":
       return <Footer />;
+    case "ej13":
+      return <DashBoard />;
       default:
         return <p style={{ padding: "1rem" }}>Selecciona un ejercicio del menú</p>;
     }

@@ -6,8 +6,8 @@ const EmpleosCard = ({ nombre, puesto, edad, salarioMensual }) => {
       <h3>{nombre}</h3>
       <p><strong>Puesto:</strong> {puesto}</p>
       <p><strong>Edad:</strong> {edad}</p>
-      <p><strong>Salario mensual:</strong> €{salarioMensual}</p>
-      <p><strong>Salario anual:</strong> €{salarioAnual}</p>
+      <p><strong>Salario mensual:</strong> ${salarioMensual}</p>
+      <p><strong>Salario anual:</strong> ${salarioAnual}</p>
       <hr />
     </div>
   );
