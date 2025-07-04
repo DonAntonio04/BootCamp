@@ -4,7 +4,6 @@ import Header from "./Tema2/Header";
 import About from "./Tema2/About";
 import Contact from "./Tema2/Contact";
 import Footer from "./Tema2/Footer";
-
 import MiPrimeraApp from "./Tema1/MiPrimeraAppReact";
 import CalculadoraPersonal from "./Tema1/CalculadoraPersonal ";
 import ListaPeliculas from "./Tema3/ListaPeliculas";
@@ -13,7 +12,9 @@ import Gallery from "./Tema4/Galeria";
 import RestaurantMenu from "./Tema4/Menu";
 import EmpleosList from "./Tema5/Empleos";
 import ProductosTienda from "./Tema5/TiendaProductos";
-import DashBoard from "./Tema1/Dashboard";
+import Dashboard from "./Tema1/Dash";
+import BlogApp from "./Tema2/Blog";
+
 
 
 const App = () => {
@@ -46,8 +47,10 @@ const App = () => {
     case "ej12":
       return <Footer />;
     case "ej13":
-      return <DashBoard />;
-      default:
+      return <Dashboard/>;
+    case "ej14":
+    return <BlogApp/>;
+    default:
         return <p style={{ padding: "1rem" }}>Selecciona un ejercicio del menú</p>;
     }
   };

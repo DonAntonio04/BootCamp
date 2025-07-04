@@ -1,62 +1,61 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const motivacion = () => [
-{start: 5, end: 12, text: "¡Hola, hoy es un buen día!"},
-{start: 12, end: 18,text: "Sigue adelante, cada paso cuenta mucho"},
-{start: 19, end: 22, text: "No te detengas, sigue adelante" },
-{start: 23, end: 4, text: "¡Tú puedes lograrlo todo!" },
-];
+export default function Dashboard() {
+  const [time, setTime] = useState(new Date());
 
-const Semana = [
-    "Domingo",
-    "Lunes",    
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado"
-];
+  useEffect(() => {
+    const interval = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-export const TomarFrase = (horas) => {
- for (const frase of motivacion()) {
-    if (frase.start <= horas && horas < frase.end) {
-     if(horas >= frase.start && horas <= frase.end ) {
-        return frase.text;
-     }else {
-        if (horas >= frase.start || horas <= frase.end) {
-          return frase.text;
-        }
-     }
-     return "Sigue adelante"
-    }
-    function TomarSiguienteBirthday (hoy, FechaMes = 12, dia = 4) {
-        let year = hoy.getFullYear();
-        let SiguienteBirthday = new Date(year, FechaMes - 1, dia);
-        if (
-            hoy.getMonth() > FechaMes - 1 ||
-            (hoy.getMonth() === FechaMes - 1 && hoy.getDate() > dia)
-        ) {
-            SiguienteBirthday.setFullYear(year + 1, FechaMes - 1, dia);
-        }
-        const diff = SiguienteBirthday - hoy;
-        return Math.ceil(diff / (1000 * 60 * 60 * 24));
-    }
-     function YearProgreso(hoy) {
-        const start = new Date(hoy.getFullYear(),0,1);
-        const end = new Date(hoy.getFullYear() + 1, 0, 1);
+  // 🕓 Hora actual
+  const hours = time.getHours().toString().padStart(2, "0");
+  const minutes = time.getMinutes().toString().padStart(2, "0");
+  const seconds = time.getSeconds().toString().padStart(2, "0");
 
-        const progreso = ((hoy - start) / (end - start)) * 100;
-        return progreso.toFixed(2);
-     }
-     const Dashboard = () => {
-        const [now, setNow] = useState(new Date());
+  // 🎂 Próximo cumpleaños
+  const nextBirthday = new Date(time.getFullYear(), 11, 4); // cambia el mes (0 = enero) y el día
+  if (time > nextBirthday) nextBirthday.setFullYear(time.getFullYear() + 1);
+  const diffMs = nextBirthday - time;
+  const daysToBirthday = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
 
-        useEffect() {
-            const timer = setInterval(() => setNow(new Date()), 1000);
-            
-        }
-     }
-  } 
-  
-};
+  // 📅 Día de la semana
+  const weekdays = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+  const today = weekdays[time.getDay()];
+  const messages = {
+    Lunes: "¡Nuevo comienzo, nuevas oportunidades!",
+    Martes: "¡Sigue adelante, ya estás en ritmo!",
+    Miércoles: "¡Mitad de semana, ánimo!",
+    Jueves: "¡Ya casi es viernes!",
+    Viernes: "¡Lo lograste, es viernes!",
+    Sábado: "¡Disfruta tu fin de semana!",
+    Domingo: "¡Prepárate para una nueva semana!",
+  };
 
+  // 📈 Progreso del año
+  const startYear = new Date(time.getFullYear(), 0, 1);
+  const endYear = new Date(time.getFullYear() + 1, 0, 1);
+  const progress = ((time - startYear) / (endYear - startYear)) * 100;
+
+  // ✨ Frase motivacional
+  const motivationalPhrases = [
+    "¡Buenos días! Hoy es un gran día para comenzar algo nuevo.",
+    "¡Sigue adelante! La tarde es perfecta para avanzar.",
+    "¡Ya casi terminas! La noche también es una oportunidad.",
+  ];
+  let phrase = "";
+  if (time.getHours() < 12) phrase = motivationalPhrases[0];
+  else if (time.getHours() < 18) phrase = motivationalPhrases[1];
+  else phrase = motivationalPhrases[2];
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <p><strong>Hora actual:</strong> {hours}:{minutes}:{seconds}</p>
+      <p><strong>Días para tu cumpleaños:</strong> {daysToBirthday} días</p>
+      <p><strong>Hoy es:</strong> {today} - {messages[today]}</p>
+      <p><strong>Progreso del año:</strong> {progress.toFixed(2)}%</p>
+      <p><strong>Frase motivacional:</strong> "{phrase}"</p>
+    </div>
+  );
+}

@@ -20,6 +20,7 @@ const Menu = ({ seleccionar }) => {
           <button onClick={() => seleccionar("ej10")}>About</button>
           <button onClick={() => seleccionar("ej11")}>Contact</button>
           <button onClick={() => seleccionar("ej12")}>Footer</button>
+          <button onClick={() => seleccionar("ej14")}>BlogApp</button>
         </div>
       </div>
 

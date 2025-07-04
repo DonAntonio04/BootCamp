@@ -1,5 +1,4 @@
 
-
 const fechaNacimiento = new Date(1998, 5, 15); 
 const añosExperiencia = 3;
 const cafesPorDia = 2;
