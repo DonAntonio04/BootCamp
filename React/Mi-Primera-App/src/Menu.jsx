@@ -37,6 +37,8 @@ const Menu = ({ seleccionar }) => {
         <div className="menu-buttons">
           <button onClick={() => seleccionar("ej5")}>Galería</button>
           <button onClick={() => seleccionar("ej6")}>Menú Restaurante</button>
+          <button onClick={() => seleccionar("ej15")}>Libros</button>
+
         </div>
       </div>
 

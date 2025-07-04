@@ -14,7 +14,7 @@ import EmpleosList from "./Tema5/Empleos";
 import ProductosTienda from "./Tema5/TiendaProductos";
 import Dashboard from "./Tema1/Dash";
 import BlogApp from "./Tema2/Blog";
-
+import CoursePlatform from "./Tema3/CoursePlataform";
 
 
 const App = () => {
@@ -50,6 +50,8 @@ const App = () => {
       return <Dashboard/>;
     case "ej14":
     return <BlogApp/>;
+    case "ej15":
+      return <CoursePlatform/>
     default:
         return <p style={{ padding: "1rem" }}>Selecciona un ejercicio del menú</p>;
     }
