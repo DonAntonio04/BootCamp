@@ -1,6 +1,8 @@
 import PersonInfo from './Tema1/PersonInfo'
 import Desestructuracion from './Tema2/Desestructuracion'
-
+import CronometroInteractivo from './Tema3/Re-rendizado'
+import CalculadoraBasica from './Tema4/ControlDeEventos'
+import TodoApp from './Tema5/TodoApp'
 const App = () => {
     /*
     return (
@@ -12,9 +14,24 @@ const App = () => {
                 salarioMensual={0}
             />
         </div>*/
-    return (
+   /* return (
         <div>
             <Desestructuracion />
+        </div>*/
+  /*  return (
+        <div>
+            <CronometroInteractivo />
+        </div>
+    )*/
+/*
+    return (
+        <div>
+            <CalculadoraBasica />
+        </div>
+    )*/
+   return (
+        <div>
+            <TodoApp />
         </div>
     )
 }

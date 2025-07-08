@@ -1,5 +1,4 @@
 const PersonInfo = (props) => {
-    // Función auxiliar para calcular la edad usando props
     const calcularEdad = () => {
         const hoy = new Date();
         let edad = hoy.getFullYear() - props.fechaNacimiento.getFullYear();
@@ -10,7 +9,6 @@ const PersonInfo = (props) => {
         return edad;
     };
 
-    // Función auxiliar para calcular el salario anual usando props
     const calcularSalarioAnual = () => props.salarioMensual * 12;
 
   
