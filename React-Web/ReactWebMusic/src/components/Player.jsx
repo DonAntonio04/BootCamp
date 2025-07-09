@@ -1,7 +1,8 @@
 export default function Player() {
+  
   return (
     <div className="player" id="player">
-      <img src="" alt="Playing" className="player-img" id="player-img" />
+      <img src="src || null" alt="Playing" className="player-img" id="player-img" />
       <div className="player-details">
         <p id="player-title">Now Playing: -</p>
         <div className="player-controls">

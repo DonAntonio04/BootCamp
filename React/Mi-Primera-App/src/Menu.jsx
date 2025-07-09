@@ -29,6 +29,7 @@ const Menu = ({ seleccionar }) => {
         <div className="menu-buttons">
           <button onClick={() => seleccionar("ej3")}>Películas</button>
           <button onClick={() => seleccionar("ej4")}>Libros</button>
+           <button onClick={() => seleccionar("ej16")}>Sistema</button>
         </div>
       </div>
 
@@ -37,7 +38,7 @@ const Menu = ({ seleccionar }) => {
         <div className="menu-buttons">
           <button onClick={() => seleccionar("ej5")}>Galería</button>
           <button onClick={() => seleccionar("ej6")}>Menú Restaurante</button>
-          <button onClick={() => seleccionar("ej15")}>Libros</button>
+          <button onClick={() => seleccionar("ej15")}>Curso</button>
 
         </div>
       </div>
@@ -47,6 +48,7 @@ const Menu = ({ seleccionar }) => {
         <div className="menu-buttons">
           <button onClick={() => seleccionar("ej7")}>Empleados</button>
           <button onClick={() => seleccionar("ej8")}>Tienda de Productos</button>
+          <button onClick={() => seleccionar("ej17")}>Curso Online</button>
         </div>
       </div>
     </nav>

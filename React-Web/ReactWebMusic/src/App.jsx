@@ -11,7 +11,7 @@ function App() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch("https://api-musica.netlify.app/api/")
+    fetch("https://api-musica.netlify.app/api/canciones")
       .then(res => res.json())
       .then(data => {
         if (!data || !Array.isArray(data.data)) {
@@ -21,9 +21,8 @@ function App() {
         setError(false);
       })
       .catch(() => {
-        // Si la API falla, dejamos la lista vacía pero no borramos el diseño
         setError(true);
-        setCanciones([]); // también puedes mantener las canciones anteriores si quieres
+        setCanciones([]); 
       })
       .finally(() => {
         setCargando(false);

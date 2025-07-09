@@ -15,6 +15,8 @@ import ProductosTienda from "./Tema5/TiendaProductos";
 import Dashboard from "./Tema1/Dash";
 import BlogApp from "./Tema2/Blog";
 import CoursePlatform from "./Tema3/CoursePlataform";
+import WeatherSystem from "./Tema3/SistemaDeClima";
+import SchoolSystem from "./Tema5/CursoOnline";
 
 
 const App = () => {
@@ -51,7 +53,11 @@ const App = () => {
     case "ej14":
     return <BlogApp/>;
     case "ej15":
-      return <CoursePlatform/>
+      return <CoursePlatform/>;
+    case "ej16":
+      return <WeatherSystem/>;
+    case "ej17":
+      return <SchoolSystem />;
     default:
         return <p style={{ padding: "1rem" }}>Selecciona un ejercicio del menú</p>;
     }
