@@ -13,10 +13,7 @@ export default function Sidebar() {
           <li>👤 My Account</li>
         </ul>
       </nav>
-      <div className="ad">
-        <p>UNLIMITED MUSIC<br />ENJOYMENT ANYWHERE</p>
-        <div className="guitar">🎸</div>
-      </div>
+      
     </aside>
   );
 }
