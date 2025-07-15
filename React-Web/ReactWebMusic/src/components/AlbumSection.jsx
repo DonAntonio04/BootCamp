@@ -1,145 +1,66 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import AlbumDetail from "./AlbumDetail";
 
-export default function AlbumSection({ canciones }) {
-  const albums = {};
+export default function AlbumSection({ canciones, onTrackSelect }) {
+  const [albums, setAlbums] = useState({});
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
 
-  canciones.forEach(c => {
-    const titulo = c.albumCompleto?.titulo || "Sin Álbum";
-    if (!albums[titulo]) {
-      albums[titulo] = {
-        portada: c.albumCompleto?.portada,
-        canciones: []
-      };
-    }
-    albums[titulo].canciones.push({
-      titulo: c.titulo,
-      duracion: c.duracion || "3:00",
-      url: c.url || "", // debe tener url de audio
+  useEffect(() => {
+    const organizedAlbums = {};
+    
+    canciones.forEach(c => {
+      const titulo = c.albumCompleto?.titulo || "Sin Álbum";
+      if (!organizedAlbums[titulo]) {
+        organizedAlbums[titulo] = {
+          titulo: titulo,
+          portada: c.albumCompleto?.portada,
+          artista: c.artista || "Artista desconocido",
+          año: c.albumCompleto?.año || "",
+          canciones: []
+        };
+      }
+      organizedAlbums[titulo].canciones.push(c);
     });
-  });
-
-  const sumarDuracion = canciones => {
-    const totalSegs = canciones.reduce((acc, c) => {
-      const [min, seg] = c.duracion.split(":").map(Number);
-      return acc + min * 60 + seg;
-    }, 0);
-    return `${Math.floor(totalSegs / 60)}:${String(totalSegs % 60).padStart(2, "0")}`;
-  };
-
-  const [reproduciendo, setReproduciendo] = useState(null);
+    
+    setAlbums(organizedAlbums);
+  }, [canciones]);
 
   return (
-    <div style={{ padding: 20 }}>
-      {Object.entries(albums).map(([titulo, info]) => {
-        const [abierto, setAbierto] = useState(false);
-        const toggle = () => setAbierto(!abierto);
-
-        return (
-          <section className="album-section" key={titulo}>
-            <div
-              className="album-header"
-              onClick={toggle}
-              style={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                background: "#222",
-                padding: "10px",
-                borderRadius: "8px",
-                marginBottom: "5px",
-                transition: "background 0.3s",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                {info.portada && (
-                  <img
-                    src={info.portada}
-                    alt={titulo}
-                    style={{ width: 60, height: 60, objectFit: "cover", borderRadius: 6 }}
-                  />
-                )}
-                <h3 style={{ margin: 0, color: "white" }}>{titulo}</h3>
-              </div>
-              <span style={{ fontSize: 24, color: "#1db954" }}>
-                {abierto ? "▼" : "▶"}
-              </span>
-            </div>
-
-            {abierto && (
-              <div
-                className="album-content"
-                style={{
-                  marginLeft: 70,
-                  marginTop: 10,
-                  color: "#ccc",
-                  transition: "all 0.3s ease-in-out",
-                  overflow: "hidden"
+    <div className="album-section-container">
+      <div className="album-grid">
+        {Object.values(albums).map((album, index) => (
+          <div 
+            key={index}
+            className="album-card"
+            onClick={() => setSelectedAlbum(album)}
+          >
+            {album.portada ? (
+              <img
+                src={album.portada}
+                alt={album.titulo}
+                className="album-cover"
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/300';
+                  e.target.onerror = null;
                 }}
-              >
-                <ol style={{ paddingLeft: 20 }}>
-                  {info.canciones.map((c, i) => (
-                    <li
-                      key={i}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        padding: "6px 0",
-                        cursor: "pointer",
-                        background: reproduciendo?.titulo === c.titulo ? "#333" : "transparent",
-                        borderRadius: 4,
-                      }}
-                      onClick={() => setReproduciendo(c)}
-                    >
-                      <span>{i + 1} - {c.titulo}</span>
-                      <span>{c.duracion}</span>
-                    </li>
-                  ))}
-                </ol>
-                <p style={{ textAlign: "right", fontWeight: "bold" }}>
-                  Duración total: {sumarDuracion(info.canciones)}
-                </p>
+              />
+            ) : (
+              <div className="album-cover-placeholder">
+                <span>No Image</span>
               </div>
             )}
-          </section>
-        );
-      })}
-
-      {reproduciendo && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            background: "#111",
-            padding: "10px 20px",
-            borderTop: "2px solid #1db954",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            color: "white",
-            zIndex: 1000
-          }}
-        >
-          <div>
-            <strong>Reproduciendo:</strong> {reproduciendo.titulo}
+            <h3 className="album-title">{album.titulo}</h3>
+            <p className="album-artist">{album.artista}</p>
           </div>
-          <audio src={reproduciendo.url} controls autoPlay style={{ width: "300px" }} />
-          <button
-            onClick={() => setReproduciendo(null)}
-            style={{
-              background: "transparent",
-              border: "1px solid #1db954",
-              color: "#1db954",
-              padding: "6px 12px",
-              borderRadius: 6,
-              cursor: "pointer"
-            }}
-          >
-            Cerrar
-          </button>
-        </div>
+        ))}
+      </div>
+
+      {selectedAlbum && (
+        <AlbumDetail 
+          album={selectedAlbum}
+          onClose={() => setSelectedAlbum(null)}
+          onTrackSelect={onTrackSelect}
+        />
       )}
     </div>
   );

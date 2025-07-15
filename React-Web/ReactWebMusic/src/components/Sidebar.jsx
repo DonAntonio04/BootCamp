@@ -1,19 +1,32 @@
-// src/components/Sidebar.jsx
-
-export default function Sidebar() {
+export default function Sidebar({ onViewChange, currentView }) {
   return (
     <aside className="sidebar">
-      <h2>🎵 Music</h2>
-      <nav>
+      <div className="sidebar-header">
+        <h1>Music App</h1>
+      </div>
+      <nav className="sidebar-nav">
         <ul>
-          <li>🏠 Home</li>
-          <li>🎧 Playlist</li>
-          <li>🎤 Artist</li>
-          <li>❤️ Liked</li>
-          <li>👤 My Account</li>
+          <li>Inicio</li>
+          <li>Explorar</li>
+          <li>Biblioteca</li>
         </ul>
       </nav>
-      
+      <div className="view-options">
+        <button 
+          onClick={() => onViewChange("albums")}
+          className={currentView === "albums" ? "active" : ""}
+        >
+          Álbumes
+  
+        </button>
+      </div>
+      <div className="playlists">
+        <h3>Playlists</h3>
+        <ul>
+          <li>Favoritos</li>
+          <li>Recientes</li>
+        </ul>
+      </div>
     </aside>
   );
-}
+} 

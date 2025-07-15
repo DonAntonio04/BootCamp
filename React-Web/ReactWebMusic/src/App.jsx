@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Sidebar from "./components/Sidebar";
-import SearchSection from "./components/SearchSection";
+import AlbumSection from "./components/AlbumSection";
 import Player from "./components/Player";
 import "./styles/styles.css";
 
@@ -19,7 +19,14 @@ function App() {
 
         const cancionesConUrl = data.data.map((c, i) => ({
           ...c,
+          id: i, // Añadir ID único para cada canción
           url: `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${(i % 10) + 1}.mp3`,
+          albumCompleto: {
+            ...c.albumCompleto,
+            portada: c.albumCompleto?.portada 
+              ? `https://api-musica.netlify.app/${c.albumCompleto.portada}`
+              : null
+          }
         }));
 
         setCanciones(cancionesConUrl);
@@ -51,14 +58,17 @@ function App() {
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder="Buscar por canción o artista..."
-            style={{ width: "100%", padding: "10px", fontSize: "16px", margin: "10px 0", borderRadius: "5px", border: "none" }}
+            className="search-input"
           />
 
-          {cargando && <p style={{ color: "white" }}>Cargando música...</p>}
-          {error && <p style={{ color: "red", marginTop: "10px" }}>❌ No se pudo conectar a la API. Intenta más tarde.</p>}
-          {!cargando && canciones.length === 0 && <p style={{ color: "white" }}>No hay canciones disponibles.</p>}
+          {cargando && <p className="loading-message">Cargando música...</p>}
+          {error && <p className="error-message">❌ No se pudo conectar a la API. Intenta más tarde.</p>}
+          {!cargando && canciones.length === 0 && <p className="no-songs-message">No hay canciones disponibles.</p>}
           {!cargando && canciones.length > 0 && (
-            <SearchSection canciones={busqueda ? resultados : canciones} onSeleccionarCancion={setCancionActual} />
+            <AlbumSection 
+              canciones={busqueda ? resultados : canciones} 
+              onTrackSelect={setCancionActual}
+            />
           )}
         </section>
       </main>

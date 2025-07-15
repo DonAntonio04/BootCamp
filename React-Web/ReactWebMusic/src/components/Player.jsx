@@ -2,32 +2,40 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Player({ cancion, onCerrar }) {
   const audioRef = useRef(null);
-  const [progreso, setProgreso] = useState(0);
-  const [pausado, setPausado] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [volume, setVolume] = useState(70);
 
   useEffect(() => {
     if (cancion && audioRef.current) {
       audioRef.current.play();
-      setPausado(false);
+      setIsPlaying(true);
     }
   }, [cancion]);
 
   const handleTimeUpdate = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      setProgreso((audio.currentTime / audio.duration) * 100);
+    if (audioRef.current) {
+      const currentProgress = (audioRef.current.currentTime / audioRef.current.duration) * 100;
+      setProgress(currentProgress);
     }
   };
 
   const togglePlay = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (audio.paused) {
-      audio.play();
-      setPausado(false);
-    } else {
-      audio.pause();
-      setPausado(true);
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = e.target.value;
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume / 100;
     }
   };
 
@@ -35,71 +43,194 @@ export default function Player({ cancion, onCerrar }) {
 
   return (
     <div style={{
-      position: "fixed",
+      position: 'fixed',
       bottom: 0,
       left: 0,
       right: 0,
-      background: "#111",
-      padding: "10px 20px",
-      borderTop: "2px solid #1db954",
-      display: "flex",
-      alignItems: "center",
-      color: "white",
-      zIndex: 1000
+      height: '90px',
+      backgroundColor: '#181818',
+      borderTop: '1px solid #282828',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 20px',
+      zIndex: 1000,
+      boxShadow: '0 -2px 10px rgba(0,0,0,0.5)'
     }}>
-      <img
-        src={cancion.albumCompleto?.portada ? `https://api-musica.netlify.app/${cancion.albumCompleto.portada}` : ""}
-        alt="portada"
-        style={{ width: 60, height: 60, borderRadius: 6, objectFit: "cover" }}
-      />
-      <div style={{ flex: 1, marginLeft: 20 }}>
-        <strong>{cancion.titulo}</strong>
-        <div style={{ height: 8, background: "#333", borderRadius: 5, marginTop: 8 }}>
-          <div style={{
-            height: "100%",
-            width: `${progreso}%`,
-            background: "#1db954",
-            borderRadius: 5,
-            transition: "width 0.2s linear"
-          }}></div>
+      {/* Portada en el reproductor */}
+      <div style={{ display: 'flex', alignItems: 'center', width: '30%' }}>
+        {cancion.albumCompleto?.portada && (
+          <img
+            src={cancion.albumCompleto.portada}
+            alt="Album cover"
+            style={{
+              width: '60px',
+              height: '60px',
+              marginRight: '15px',
+              objectFit: 'cover',
+              borderRadius: '4px'
+            }}
+          />
+        )}
+        <div>
+          <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#fff' }}>
+            {cancion.titulo}
+          </div>
+          <div style={{ fontSize: '12px', color: '#b3b3b3' }}>
+            {cancion.albumCompleto?.titulo || "Sin Álbum"}
+          </div>
         </div>
       </div>
 
-      <button
-        onClick={togglePlay}
-        style={{
-          marginLeft: 20,
-          background: "transparent",
-          color: "#1db954",
-          fontSize: 24,
-          border: "none",
-          cursor: "pointer"
-        }}
-      >
-        {pausado ? "▶️" : "⏸️"}
-      </button>
+      {/* Controles del reproductor */}
+      <div style={{ width: '40%', textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px' }}>
+          <button style={{
+            background: 'none',
+            border: 'none',
+            color: '#fff',
+            fontSize: '20px',
+            margin: '0 15px',
+            cursor: 'pointer'
+          }}>
+            ⏮
+          </button>
+          <button 
+            onClick={togglePlay}
+            style={{
+              background: '#fff',
+              border: 'none',
+              borderRadius: '50%',
+              width: '35px',
+              height: '35px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 15px',
+              cursor: 'pointer',
+              transition: 'transform 0.2s',
+              ':hover': {
+                transform: 'scale(1.05)'
+              }
+            }}
+          >
+            {isPlaying ? (
+              <span style={{ fontSize: '14px' }}>⏸</span>
+            ) : (
+              <span style={{ fontSize: '14px', marginLeft: '2px' }}>▶</span>
+            )}
+          </button>
+          <button style={{
+            background: 'none',
+            border: 'none',
+            color: '#fff',
+            fontSize: '20px',
+            margin: '0 15px',
+            cursor: 'pointer'
+          }}>
+            ⏭
+          </button>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <span style={{ fontSize: '12px', color: '#b3b3b3', width: '40px' }}>
+            {audioRef.current ? formatTime(audioRef.current.currentTime) : '0:00'}
+          </span>
+          <div style={{
+            flex: 1,
+            height: '4px',
+            backgroundColor: '#535353',
+            borderRadius: '2px',
+            margin: '0 10px',
+            position: 'relative',
+            cursor: 'pointer'
+          }}>
+            <div style={{
+              width: `${progress}%`,
+              height: '100%',
+              backgroundColor: '#1db954',
+              borderRadius: '2px'
+            }}></div>
+          </div>
+          <span style={{ fontSize: '12px', color: '#b3b3b3', width: '40px' }}>
+            {audioRef.current ? formatTime(audioRef.current.duration) : '0:00'}
+          </span>
+        </div>
+      </div>
 
-      <button
-        onClick={onCerrar}
-        style={{
-          marginLeft: 10,
-          background: "transparent",
-          border: "1px solid #1db954",
-          color: "#1db954",
-          padding: "6px 12px",
-          borderRadius: 6,
-          cursor: "pointer"
-        }}
-      >
-        ✖
-      </button>
+      {/* Controles de volumen y cierre */}
+      <div style={{ width: '30%', textAlign: 'right', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+        <button style={{
+          background: 'none',
+          border: 'none',
+          color: '#b3b3b3',
+          fontSize: '18px',
+          margin: '0 15px',
+          cursor: 'pointer'
+        }}>
+          ♫
+        </button>
+        <div style={{
+          width: '100px',
+          height: '4px',
+          backgroundColor: '#535353',
+          borderRadius: '2px',
+          marginRight: '20px',
+          position: 'relative'
+        }}>
+          <div style={{
+            width: `${volume}%`,
+            height: '100%',
+            backgroundColor: '#1db954',
+            borderRadius: '2px'
+          }}></div>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={volume}
+            onChange={handleVolumeChange}
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              opacity: 0,
+              top: 0,
+              left: 0,
+              cursor: 'pointer'
+            }}
+          />
+        </div>
+        <button 
+          onClick={onCerrar}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#b3b3b3',
+            fontSize: '18px',
+            cursor: 'pointer',
+            transition: 'color 0.2s',
+            ':hover': {
+              color: '#fff'
+            }
+          }}
+        >
+          ✖
+        </button>
+      </div>
 
       <audio
         ref={audioRef}
         src={cancion.url}
         onTimeUpdate={handleTimeUpdate}
-        autoPlay
+        onEnded={() => setIsPlaying(false)}
+        autoPlay={isPlaying}
       />
     </div>
   );
+}
+
+function formatTime(seconds) {
+  if (!seconds || isNaN(seconds)) return '0:00';
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
