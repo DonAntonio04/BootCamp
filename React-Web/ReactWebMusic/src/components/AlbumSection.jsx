@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import AlbumDetail from "./AlbumDetail";
 
-export default function AlbumSection({ canciones, onTrackSelect }) {
+export default function AlbumSection({ canciones, onTrackSelect, currentTrack, onPlayAlbum }) {
   const [albums, setAlbums] = useState({});
   const [selectedAlbum, setSelectedAlbum] = useState(null);
 
@@ -26,31 +26,85 @@ export default function AlbumSection({ canciones, onTrackSelect }) {
   }, [canciones]);
 
   return (
-    <div className="album-section-container">
-      <div className="album-grid">
+    <div style={{
+      padding: '20px',
+      backgroundColor: '#121212',
+      minHeight: '100vh',
+      color: '#fff'
+    }}>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+        gap: '24px',
+        padding: '20px 0'
+      }}>
         {Object.values(albums).map((album, index) => (
           <div 
             key={index}
-            className="album-card"
-            onClick={() => setSelectedAlbum(album)}
+            style={{
+              backgroundColor: '#181818',
+              borderRadius: '8px',
+              padding: '16px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              ':hover': {
+                backgroundColor: '#282828',
+                transform: 'scale(1.03)'
+              }
+            }}
+            onClick={() => {
+              setSelectedAlbum(album);
+              onPlayAlbum(album);
+            }}
           >
             {album.portada ? (
               <img
                 src={album.portada}
                 alt={album.titulo}
-                className="album-cover"
+                style={{
+                  width: '100%',
+                  aspectRatio: '1/1',
+                  objectFit: 'cover',
+                  borderRadius: '4px',
+                  marginBottom: '16px',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)'
+                }}
                 onError={(e) => {
                   e.target.src = 'https://via.placeholder.com/300';
                   e.target.onerror = null;
                 }}
               />
             ) : (
-              <div className="album-cover-placeholder">
+              <div style={{
+                width: '100%',
+                aspectRatio: '1/1',
+                backgroundColor: '#282828',
+                borderRadius: '4px',
+                marginBottom: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#b3b3b3'
+              }}>
                 <span>No Image</span>
               </div>
             )}
-            <h3 className="album-title">{album.titulo}</h3>
-            <p className="album-artist">{album.artista}</p>
+            <h3 style={{
+              margin: '0 0 8px 0',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}>{album.titulo}</h3>
+            <p style={{
+              margin: 0,
+              fontSize: '14px',
+              color: '#b3b3b3',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}>{album.artista}</p>
           </div>
         ))}
       </div>
@@ -60,6 +114,8 @@ export default function AlbumSection({ canciones, onTrackSelect }) {
           album={selectedAlbum}
           onClose={() => setSelectedAlbum(null)}
           onTrackSelect={onTrackSelect}
+          currentTrack={currentTrack}
+          onPlayAlbum={() => onPlayAlbum(selectedAlbum)}
         />
       )}
     </div>

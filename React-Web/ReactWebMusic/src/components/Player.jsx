@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function Player({ cancion, onCerrar }) {
+export default function Player({ cancion, onCerrar, onNext, onPrevious }) {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -8,8 +8,10 @@ export default function Player({ cancion, onCerrar }) {
 
   useEffect(() => {
     if (cancion && audioRef.current) {
-      audioRef.current.play();
-      setIsPlaying(true);
+      audioRef.current.src = cancion.url;
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(error => console.error("Error al reproducir:", error));
     }
   }, [cancion]);
 
@@ -36,6 +38,16 @@ export default function Player({ cancion, onCerrar }) {
     setVolume(newVolume);
     if (audioRef.current) {
       audioRef.current.volume = newVolume / 100;
+    }
+  };
+
+  const handleProgressClick = (e) => {
+    if (audioRef.current) {
+      const rect = e.target.getBoundingClientRect();
+      const clickPosition = (e.clientX - rect.left) / rect.width;
+      const newTime = clickPosition * audioRef.current.duration;
+      audioRef.current.currentTime = newTime;
+      setProgress(clickPosition * 100);
     }
   };
 
@@ -76,7 +88,7 @@ export default function Player({ cancion, onCerrar }) {
             {cancion.titulo}
           </div>
           <div style={{ fontSize: '12px', color: '#b3b3b3' }}>
-            {cancion.albumCompleto?.titulo || "Sin Álbum"}
+            {cancion.artista} • {cancion.albumCompleto?.titulo || "Sin Álbum"}
           </div>
         </div>
       </div>
@@ -84,14 +96,17 @@ export default function Player({ cancion, onCerrar }) {
       {/* Controles del reproductor */}
       <div style={{ width: '40%', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px' }}>
-          <button style={{
-            background: 'none',
-            border: 'none',
-            color: '#fff',
-            fontSize: '20px',
-            margin: '0 15px',
-            cursor: 'pointer'
-          }}>
+          <button 
+            onClick={onPrevious}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#fff',
+              fontSize: '20px',
+              margin: '0 15px',
+              cursor: 'pointer'
+            }}
+          >
             ⏮
           </button>
           <button 
@@ -119,14 +134,17 @@ export default function Player({ cancion, onCerrar }) {
               <span style={{ fontSize: '14px', marginLeft: '2px' }}>▶</span>
             )}
           </button>
-          <button style={{
-            background: 'none',
-            border: 'none',
-            color: '#fff',
-            fontSize: '20px',
-            margin: '0 15px',
-            cursor: 'pointer'
-          }}>
+          <button 
+            onClick={onNext}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#fff',
+              fontSize: '20px',
+              margin: '0 15px',
+              cursor: 'pointer'
+            }}
+          >
             ⏭
           </button>
         </div>
@@ -134,15 +152,18 @@ export default function Player({ cancion, onCerrar }) {
           <span style={{ fontSize: '12px', color: '#b3b3b3', width: '40px' }}>
             {audioRef.current ? formatTime(audioRef.current.currentTime) : '0:00'}
           </span>
-          <div style={{
-            flex: 1,
-            height: '4px',
-            backgroundColor: '#535353',
-            borderRadius: '2px',
-            margin: '0 10px',
-            position: 'relative',
-            cursor: 'pointer'
-          }}>
+          <div 
+            onClick={handleProgressClick}
+            style={{
+              flex: 1,
+              height: '4px',
+              backgroundColor: '#535353',
+              borderRadius: '2px',
+              margin: '0 10px',
+              position: 'relative',
+              cursor: 'pointer'
+            }}
+          >
             <div style={{
               width: `${progress}%`,
               height: '100%',
@@ -219,10 +240,9 @@ export default function Player({ cancion, onCerrar }) {
 
       <audio
         ref={audioRef}
-        src={cancion.url}
         onTimeUpdate={handleTimeUpdate}
-        onEnded={() => setIsPlaying(false)}
-        autoPlay={isPlaying}
+        onEnded={onNext}
+        onError={(e) => console.error("Error de audio:", e)}
       />
     </div>
   );

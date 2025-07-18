@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function AlbumDetail({ album, onClose, onTrackSelect }) {
-  const [currentTrack, setCurrentTrack] = useState(null);
+export default function AlbumDetail({ album, onClose, onTrackSelect, currentTrack, onPlayAlbum }) {
+  const [localCurrentTrack, setLocalCurrentTrack] = useState(currentTrack);
+
+  useEffect(() => {
+    setLocalCurrentTrack(currentTrack);
+  }, [currentTrack]);
 
   const handleTrackSelect = (track) => {
-    setCurrentTrack(track);
+    setLocalCurrentTrack(track);
     onTrackSelect(track);
   };
 
@@ -73,17 +77,24 @@ export default function AlbumDetail({ album, onClose, onTrackSelect }) {
               color: '#b3b3b3'
             }}>{album.artista} • {album.año} • {album.canciones.length} canciones</p>
             
-            <button style={{
-              backgroundColor: '#1db954',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '20px',
-              padding: '8px 32px',
-              fontSize: '14px',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              marginTop: '16px'
-            }}>
+            <button 
+              onClick={() => onPlayAlbum(album)}
+              style={{
+                backgroundColor: '#1db954',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '20px',
+                padding: '8px 32px',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                marginTop: '16px',
+                transition: 'transform 0.2s',
+                ':hover': {
+                  transform: 'scale(1.05)'
+                }
+              }}
+            >
               REPRODUCIR
             </button>
           </div>
@@ -117,7 +128,7 @@ export default function AlbumDetail({ album, onClose, onTrackSelect }) {
               padding: '8px 0',
               borderBottom: '1px solid #282828',
               cursor: 'pointer',
-              backgroundColor: currentTrack?.titulo === track.titulo ? '#2a2a2a' : 'transparent',
+              backgroundColor: localCurrentTrack?.id === track.id ? '#2a2a2a' : 'transparent',
               ':hover': {
                 backgroundColor: '#2a2a2a'
               }
@@ -132,8 +143,8 @@ export default function AlbumDetail({ album, onClose, onTrackSelect }) {
             <span></span>
             <div>
               <div style={{ 
-                fontWeight: currentTrack?.titulo === track.titulo ? 'bold' : 'normal',
-                color: currentTrack?.titulo === track.titulo ? '#1db954' : '#fff'
+                fontWeight: localCurrentTrack?.id === track.id ? 'bold' : 'normal',
+                color: localCurrentTrack?.id === track.id ? '#1db954' : '#fff'
               }}>
                 {track.titulo}
               </div>
